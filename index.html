@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Abhängig von Technologie? — Die heutige Gesellschaft im Check</title>
+<meta name="description" content="Wie abhängig ist unsere Gesellschaft wirklich von Technologie? Interaktive Reise mit Studien, Diagrammen und eigener Reflexion."/>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@400;600;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<style>
+  :root{
+    --bg:#fbf9f4;
+    --bg-2:#f3eee2;
+    --ink:#1b1d22;
+    --ink-soft:#4a4f57;
+    --accent:#ff5b3a;
+    --accent-2:#ffb547;
+    --mint:#9be8c4;
+    --sky:#bfd9ff;
+    --line:#1b1d2218;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--ink);line-height:1.6;overflow-x:hidden}
+  h1,h2,h3{font-family:'Fraunces',serif;font-weight:800;line-height:1.05;letter-spacing:-.02em}
+  a{color:inherit}
+  sup a{color:var(--accent);text-decoration:none;font-weight:600;font-size:.7em;padding:0 2px}
+  sup a:hover{text-decoration:underline}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 24px}
+
+  nav{position:sticky;top:0;z-index:50;backdrop-filter:blur(14px);background:rgba(251,249,244,.78);border-bottom:1px solid var(--line)}
+  .nav-row{display:flex;align-items:center;justify-content:space-between;padding:16px 0}
+  .logo{font-family:'Fraunces',serif;font-weight:800;font-size:20px;display:flex;gap:8px;align-items:center}
+  .logo .dot{width:10px;height:10px;border-radius:50%;background:var(--accent);display:inline-block;animation:pulse 2s infinite}
+  .nav-links{display:flex;gap:24px;font-size:14px;font-weight:500}
+  .nav-links a{text-decoration:none;color:var(--ink-soft);transition:color .2s}
+  .nav-links a:hover{color:var(--accent)}
+  .cta{background:var(--ink);color:var(--bg);padding:10px 18px;border-radius:999px;text-decoration:none;font-size:14px;font-weight:600;transition:transform .2s,background .2s}
+  .cta:hover{transform:translateY(-2px);background:var(--accent)}
+  @media(max-width:820px){.nav-links{display:none}}
+
+  .hero{padding:90px 0 60px;position:relative;overflow:hidden}
+  .hero h1{font-size:clamp(48px,8vw,108px);max-width:11ch}
+  .hero h1 .hl{background:linear-gradient(120deg,var(--accent),var(--accent-2));-webkit-background-clip:text;background-clip:text;color:transparent;font-style:italic}
+  .hero p.lead{margin-top:28px;max-width:58ch;font-size:clamp(17px,1.6vw,20px);color:var(--ink-soft)}
+  .hero .row{display:flex;gap:14px;margin-top:36px;flex-wrap:wrap}
+  .btn-primary{background:var(--accent);color:#fff;padding:16px 28px;border-radius:999px;text-decoration:none;font-weight:600;display:inline-flex;gap:10px;align-items:center;box-shadow:0 10px 30px -10px var(--accent);transition:transform .2s,box-shadow .2s}
+  .btn-primary:hover{transform:translateY(-3px);box-shadow:0 18px 40px -12px var(--accent)}
+  .btn-ghost{background:transparent;color:var(--ink);padding:16px 26px;border-radius:999px;border:1.5px solid var(--ink);text-decoration:none;font-weight:600;transition:background .2s,color .2s}
+  .btn-ghost:hover{background:var(--ink);color:var(--bg)}
+
+  .float{position:absolute;border-radius:50%;filter:blur(1px);opacity:.85;animation:float 9s ease-in-out infinite}
+  .f1{width:140px;height:140px;background:var(--mint);top:120px;right:8%}
+  .f2{width:90px;height:90px;background:var(--sky);bottom:60px;right:24%;animation-delay:-3s}
+  .f3{width:60px;height:60px;background:var(--accent-2);top:40%;right:42%;animation-delay:-6s}
+  @keyframes float{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-22px) rotate(8deg)}}
+  @keyframes pulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.4);opacity:.6}}
+
+  .ticker{background:var(--ink);color:var(--bg);overflow:hidden;padding:18px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .ticker-track{display:flex;gap:60px;white-space:nowrap;animation:scroll 32s linear infinite;font-family:'Fraunces',serif;font-size:22px}
+  .ticker-track span{display:inline-flex;align-items:center;gap:14px}
+  .ticker-track .sep{color:var(--accent)}
+  @keyframes scroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+  section{padding:90px 0}
+  .eyebrow{display:inline-block;font-size:12px;letter-spacing:.18em;text-transform:uppercase;font-weight:600;color:var(--accent);margin-bottom:18px}
+  h2.section-title{font-size:clamp(34px,5vw,60px);max-width:18ch;margin-bottom:18px}
+  .section-intro{max-width:60ch;color:var(--ink-soft);font-size:17px;margin-bottom:60px}
+
+  .stats{background:var(--bg-2)}
+  .stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:22px}
+  @media(max-width:900px){.stat-grid{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:500px){.stat-grid{grid-template-columns:1fr}}
+  .stat{background:var(--bg);border-radius:24px;padding:32px;border:1px solid var(--line);transition:transform .3s,box-shadow .3s}
+  .stat:hover{transform:translateY(-6px);box-shadow:0 20px 50px -25px rgba(0,0,0,.18)}
+  .stat .num{font-family:'Fraunces',serif;font-weight:800;font-size:60px;line-height:1;background:linear-gradient(135deg,var(--ink),var(--accent));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .stat .label{margin-top:14px;font-weight:600;font-size:15px}
+  .stat .desc{margin-top:8px;color:var(--ink-soft);font-size:14px}
+  .stat .src{margin-top:14px;font-size:11px;color:var(--ink-soft);font-weight:500;letter-spacing:.04em;text-transform:uppercase}
+  .stat .src a{color:var(--accent);text-decoration:none}
+  .stat .src a:hover{text-decoration:underline}
+
+  /* CHARTS */
+  .charts-section{background:var(--bg)}
+  .chart-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:30px}
+  @media(max-width:850px){.chart-grid{grid-template-columns:1fr}}
+  .chart-card{background:var(--bg-2);border-radius:24px;padding:32px;border:1px solid var(--line)}
+  .chart-card h3{font-size:22px;margin-bottom:6px}
+  .chart-card .subtitle{color:var(--ink-soft);font-size:14px;margin-bottom:24px}
+  .chart-wrap{position:relative;height:280px}
+  .chart-source{margin-top:18px;padding-top:16px;border-top:1px solid var(--line);font-size:12px;color:var(--ink-soft)}
+  .chart-source a{color:var(--accent);text-decoration:none;font-weight:600}
+  .chart-source a:hover{text-decoration:underline}
+
+  /* QUIZ */
+  .quiz-wrap{background:var(--ink);color:var(--bg);border-radius:32px;padding:54px;position:relative;overflow:hidden}
+  .quiz-wrap::before{content:"";position:absolute;width:300px;height:300px;border-radius:50%;background:var(--accent);opacity:.18;filter:blur(60px);top:-100px;right:-80px}
+  .quiz-wrap h2{color:var(--bg)}
+  .quiz-q{font-family:'Fraunces',serif;font-size:clamp(24px,3vw,32px);margin:24px 0 28px;min-height:90px}
+  .quiz-opts{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+  @media(max-width:600px){.quiz-opts{grid-template-columns:1fr}}
+  .opt{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.15);padding:18px 22px;border-radius:16px;cursor:pointer;font-weight:500;transition:all .2s;color:var(--bg);text-align:left;font-family:inherit;font-size:15px}
+  .opt:hover{background:rgba(255,91,58,.18);border-color:var(--accent);transform:translateX(4px)}
+  .opt.selected{background:var(--accent);border-color:var(--accent)}
+  .quiz-progress{height:6px;background:rgba(255,255,255,.1);border-radius:99px;margin-top:32px;overflow:hidden}
+  .quiz-progress-bar{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent-2));width:0%;transition:width .4s ease;border-radius:99px}
+  .quiz-meta{display:flex;justify-content:space-between;margin-top:14px;font-size:13px;color:rgba(255,255,255,.7)}
+  .quiz-result{display:none;text-align:center;padding:20px 0}
+  .quiz-result .score{font-family:'Fraunces',serif;font-size:80px;color:var(--accent-2);line-height:1}
+  .quiz-result h3{font-size:32px;margin:18px 0 10px;color:var(--bg)}
+  .quiz-result p{color:rgba(255,255,255,.8);max-width:50ch;margin:0 auto 28px}
+
+  .duo{display:grid;grid-template-columns:1fr 1fr;gap:30px}
+  @media(max-width:800px){.duo{grid-template-columns:1fr}}
+  .card{border-radius:24px;padding:38px;border:1px solid var(--line);transition:transform .3s}
+  .card:hover{transform:translateY(-4px)}
+  .card.pro{background:var(--mint)}
+  .card.con{background:#ffd4cb}
+  .card h3{font-size:28px;margin-bottom:18px}
+  .card ul{list-style:none}
+  .card li{padding:14px 0;border-bottom:1px solid rgba(0,0,0,.08);display:flex;gap:12px;align-items:flex-start}
+  .card li:last-child{border:none}
+  .card .ico{flex-shrink:0;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.1);font-weight:800;font-size:14px}
+
+  .reflect{background:var(--bg-2)}
+  .slider-card{background:var(--bg);border-radius:28px;padding:48px;border:1px solid var(--line);max-width:760px;margin:0 auto}
+  .slider-card label{display:block;font-weight:600;margin-bottom:18px;font-size:16px}
+  .slider-card input[type=range]{-webkit-appearance:none;width:100%;height:10px;border-radius:99px;background:linear-gradient(90deg,var(--mint),var(--accent-2),var(--accent));outline:none;cursor:pointer}
+  .slider-card input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:28px;height:28px;border-radius:50%;background:var(--ink);border:4px solid var(--bg);cursor:pointer;box-shadow:0 4px 14px rgba(0,0,0,.2);transition:transform .15s}
+  .slider-card input[type=range]::-webkit-slider-thumb:hover{transform:scale(1.15)}
+  .slider-readout{margin-top:28px;font-family:'Fraunces',serif;font-size:48px;font-weight:800;text-align:center}
+  .slider-msg{text-align:center;color:var(--ink-soft);margin-top:8px;min-height:24px;transition:opacity .3s}
+
+  .survey{background:linear-gradient(135deg,#1b1d22 0%,#2d1f3d 60%,#5c2547 100%);color:var(--bg);text-align:center;border-radius:36px;padding:80px 40px;margin:0 24px 90px;position:relative;overflow:hidden}
+  .survey::before,.survey::after{content:"";position:absolute;border-radius:50%;filter:blur(80px);opacity:.5}
+  .survey::before{width:400px;height:400px;background:var(--accent);top:-150px;left:-100px}
+  .survey::after{width:350px;height:350px;background:var(--accent-2);bottom:-120px;right:-80px}
+  .survey>*{position:relative;z-index:1}
+  .survey h2{font-size:clamp(36px,5vw,64px);max-width:18ch;margin:0 auto 20px}
+  .survey p{max-width:55ch;margin:0 auto 36px;color:rgba(255,255,255,.85);font-size:18px}
+  .survey .btn-survey{display:inline-flex;align-items:center;gap:12px;background:var(--bg);color:var(--ink);padding:22px 40px;border-radius:999px;text-decoration:none;font-weight:700;font-size:18px;box-shadow:0 20px 60px -15px rgba(0,0,0,.5);transition:transform .25s,box-shadow .25s}
+  .survey .btn-survey:hover{transform:translateY(-4px) scale(1.02);box-shadow:0 30px 70px -15px rgba(0,0,0,.6)}
+  .survey .arr{transition:transform .25s}
+  .survey .btn-survey:hover .arr{transform:translateX(6px)}
+  .survey small{display:block;margin-top:24px;color:rgba(255,255,255,.6);font-size:13px}
+
+  /* SOURCES */
+  .sources{background:var(--bg-2)}
+  .sources ol{list-style:none;counter-reset:src;max-width:900px}
+  .sources li{counter-increment:src;padding:18px 0 18px 50px;border-bottom:1px solid var(--line);position:relative;font-size:14px;color:var(--ink-soft);line-height:1.5}
+  .sources li::before{content:counter(src);position:absolute;left:0;top:18px;width:34px;height:34px;border-radius:50%;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-family:'Fraunces',serif;font-size:14px}
+  .sources li:target{background:rgba(255,91,58,.08);border-radius:12px;padding-left:60px;padding-right:14px}
+  .sources li strong{color:var(--ink);font-weight:600;display:block;margin-bottom:4px;font-size:15px}
+  .sources li a{color:var(--accent);text-decoration:none;word-break:break-word}
+  .sources li a:hover{text-decoration:underline}
+  .sources li em{font-style:normal;color:var(--ink);font-weight:500}
+
+  footer{padding:40px 0 60px;border-top:1px solid var(--line);text-align:center;color:var(--ink-soft);font-size:14px}
+  .reveal{opacity:0;transform:translateY(30px);transition:opacity .8s ease,transform .8s ease}
+  .reveal.in{opacity:1;transform:none}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap nav-row">
+    <div class="logo"><span class="dot"></span>tech&amp;wir</div>
+    <div class="nav-links">
+      <a href="#zahlen">Zahlen</a>
+      <a href="#diagramme">Diagramme</a>
+      <a href="#quiz">Quiz</a>
+      <a href="#zwei-seiten">Zwei Seiten</a>
+      <a href="#quellen">Quellen</a>
+    </div>
+    <a class="cta" href="#umfrage">Umfrage →</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <span class="eyebrow">Gesellschaft &amp; Technologie · 2026</span>
+    <h1>Wie <span class="hl">abhängig</span> sind wir wirklich von Technologie?</h1>
+    <p class="lead">Ohne Smartphone aus dem Haus? Undenkbar. Ohne Internet arbeiten? Unmöglich. Diese Seite nimmt dich mit auf eine ehrliche Reise durch <strong>belegte Zahlen</strong>, Diagramme aus echten Studien und deine eigene Reflexion — und stellt dir am Ende eine kurze Frage.</p>
+    <div class="row">
+      <a class="btn-primary" href="#umfrage">An der Umfrage teilnehmen <span>→</span></a>
+      <a class="btn-ghost" href="#zahlen">Erst die Fakten</a>
+    </div>
+  </div>
+  <span class="float f1"></span>
+  <span class="float f2"></span>
+  <span class="float f3"></span>
+</header>
+
+<div class="ticker">
+  <div class="ticker-track">
+    <span>📱 6h 38min Bildschirmzeit pro Tag</span><span class="sep">●</span>
+    <span>🌍 5,56 Mrd. Menschen online</span><span class="sep">●</span>
+    <span>⚡ 89% checken das Handy in der 1. Stunde</span><span class="sep">●</span>
+    <span>🧠 Aufmerksamkeit: 47 Sek. pro Bildschirm</span><span class="sep">●</span>
+    <span>📱 6h 38min Bildschirmzeit pro Tag</span><span class="sep">●</span>
+    <span>🌍 5,56 Mrd. Menschen online</span><span class="sep">●</span>
+    <span>⚡ 89% checken das Handy in der 1. Stunde</span><span class="sep">●</span>
+    <span>🧠 Aufmerksamkeit: 47 Sek. pro Bildschirm</span><span class="sep">●</span>
+  </div>
+</div>
+
+<section id="zahlen" class="stats">
+  <div class="wrap">
+    <span class="eyebrow reveal">Die Lage — alles belegt</span>
+    <h2 class="section-title reveal">Zahlen, die uns alle betreffen.</h2>
+    <p class="section-intro reveal">Technologie ist kein Werkzeug mehr — sie ist Infrastruktur unseres Alltags. Vier Zahlen aus aktuellen Studien:</p>
+    <div class="stat-grid">
+      <div class="stat reveal">
+        <div class="num" data-count="6.6">0</div>
+        <div class="label">Stunden online pro Tag</div>
+        <div class="desc">Tägliche Internetnutzung weltweit (alle Geräte).</div>
+        <div class="src">Quelle: <a href="#q1">DataReportal 2024 [1]</a></div>
+      </div>
+      <div class="stat reveal">
+        <div class="num" data-count="89">0</div>
+        <div class="label">% checken morgens das Handy</div>
+        <div class="desc">Innerhalb der ersten Stunde nach dem Aufwachen.</div>
+        <div class="src">Quelle: <a href="#q2">Reviews.org 2024 [2]</a></div>
+      </div>
+      <div class="stat reveal">
+        <div class="num" data-count="56.9">0</div>
+        <div class="label">% fühlen sich süchtig</div>
+        <div class="desc">US-Erwachsene, die sich abhängig vom Smartphone fühlen.</div>
+        <div class="src">Quelle: <a href="#q2">Reviews.org 2024 [2]</a></div>
+      </div>
+      <div class="stat reveal">
+        <div class="num" data-count="205">0</div>
+        <div class="label">× pro Tag entsperrt</div>
+        <div class="desc">Durchschnittliche Smartphone-Checks pro Tag.</div>
+        <div class="src">Quelle: <a href="#q2">Reviews.org 2024 [2]</a></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="diagramme" class="charts-section">
+  <div class="wrap">
+    <span class="eyebrow reveal">Diagramme aus Studien</span>
+    <h2 class="section-title reveal">Vier Bilder. Eine deutliche Geschichte.</h2>
+    <p class="section-intro reveal">Echte Daten aus DataReportal, Pew Research, Common Sense Media und der Sapien Labs Mental Health Studie — übersichtlich visualisiert.</p>
+
+    <div class="chart-grid">
+      <div class="chart-card reveal">
+        <h3>Bildschirmzeit weltweit (2013 → 2024)</h3>
+        <p class="subtitle">Durchschnittliche tägliche Internetnutzung pro Person</p>
+        <div class="chart-wrap"><canvas id="c1"></canvas></div>
+        <div class="chart-source">Quelle: <a href="#q1">DataReportal — Digital 2024 Global Overview Report [1]</a></div>
+      </div>
+
+      <div class="chart-card reveal">
+        <h3>Wer fühlt sich abhängig?</h3>
+        <p class="subtitle">Selbstwahrgenommene Smartphone-Abhängigkeit nach Altersgruppe (USA)</p>
+        <div class="chart-wrap"><canvas id="c2"></canvas></div>
+        <div class="chart-source">Quelle: <a href="#q2">Reviews.org — Cell Phone Addiction Study 2024 [2]</a></div>
+      </div>
+
+      <div class="chart-card reveal">
+        <h3>Tägliche Mediennutzung Jugendlicher</h3>
+        <p class="subtitle">Stunden pro Tag mit Bildschirmmedien (13–18 Jahre, USA)</p>
+        <div class="chart-wrap"><canvas id="c3"></canvas></div>
+        <div class="chart-source">Quelle: <a href="#q3">Common Sense Media Census 2021 [3]</a></div>
+      </div>
+
+      <div class="chart-card reveal">
+        <h3>Psychisches Wohlbefinden nach Smartphone-Alter</h3>
+        <p class="subtitle">Mental Health Quotient junger Erwachsener — je früher das erste Smartphone, desto niedriger</p>
+        <div class="chart-wrap"><canvas id="c4"></canvas></div>
+        <div class="chart-source">Quelle: <a href="#q4">Sapien Labs — Age of First Smartphone & Mental Wellbeing 2023 [4]</a></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="quiz">
+  <div class="wrap">
+    <span class="eyebrow reveal">Mach den Selbsttest</span>
+    <h2 class="section-title reveal">Wie tech-abhängig <em>bist</em> du?</h2>
+    <p class="section-intro reveal">5 ehrliche Fragen — kein Datenklau, alles bleibt im Browser. Am Ende: dein persönlicher Score.</p>
+    <div class="quiz-wrap reveal">
+      <div id="quiz-content">
+        <div class="quiz-q" id="quiz-question">Frage lädt…</div>
+        <div class="quiz-opts" id="quiz-opts"></div>
+        <div class="quiz-progress"><div class="quiz-progress-bar" id="qbar"></div></div>
+        <div class="quiz-meta"><span id="qcount">Frage 1 von 5</span><span>Tippe eine Antwort</span></div>
+      </div>
+      <div class="quiz-result" id="quiz-result">
+        <div class="score" id="score">0</div>
+        <h3 id="score-title">Dein Ergebnis</h3>
+        <p id="score-desc"></p>
+        <a class="btn-primary" href="#umfrage">Jetzt an der Umfrage teilnehmen →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="zwei-seiten" style="background:var(--bg-2)">
+  <div class="wrap">
+    <span class="eyebrow reveal">Zwei Seiten der Medaille</span>
+    <h2 class="section-title reveal">Segen. Fluch. Beides gleichzeitig.</h2>
+    <p class="section-intro reveal">Technologie hat unser Leben radikal vereinfacht — und gleichzeitig komplizierter gemacht als je zuvor.</p>
+    <div class="duo">
+      <div class="card pro reveal">
+        <h3>Was wir gewonnen haben</h3>
+        <ul>
+          <li><span class="ico">+</span><span>Wissen aus aller Welt — jederzeit, in Sekunden <sup><a href="#q5">[5]</a></sup></span></li>
+          <li><span class="ico">+</span><span>KI-gestützte Medizin und Telemedizin <sup><a href="#q6">[6]</a></sup></span></li>
+          <li><span class="ico">+</span><span>Globale Verbindungen über Sprachen und Grenzen hinweg <sup><a href="#q1">[1]</a></sup></span></li>
+          <li><span class="ico">+</span><span>Remote-Arbeit und neue Berufe</span></li>
+          <li><span class="ico">+</span><span>Stimmen, die sonst nie gehört worden wären</span></li>
+        </ul>
+      </div>
+      <div class="card con reveal">
+        <h3>Was wir verlieren</h3>
+        <ul>
+          <li><span class="ico">−</span><span>Tiefe Aufmerksamkeit — nur noch 47 Sekunden pro Bildschirm <sup><a href="#q7">[7]</a></sup></span></li>
+          <li><span class="ico">−</span><span>Schlafdauer und -qualität sinken messbar <sup><a href="#q8">[8]</a></sup></span></li>
+          <li><span class="ico">−</span><span>Erhöhtes Risiko für Depression und Angst bei intensiver Social-Media-Nutzung <sup><a href="#q9">[9]</a></sup></span></li>
+          <li><span class="ico">−</span><span>Echte Gespräche werden durch Geräte unterbrochen <sup><a href="#q10">[10]</a></sup></span></li>
+          <li><span class="ico">−</span><span>Privatsphäre als Konzept gerät unter Druck</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="reflexion" class="reflect">
+  <div class="wrap">
+    <span class="eyebrow reveal">Deine Einschätzung</span>
+    <h2 class="section-title reveal">Wie viele Stunden wärst du <em>ohne</em> Technologie ausgekommen — heute?</h2>
+    <p class="section-intro reveal">Schieb den Regler ehrlich. Wir verraten nichts.</p>
+    <div class="slider-card reveal">
+      <label for="hrs">Stunden ohne Smartphone, Internet oder Computer:</label>
+      <input type="range" id="hrs" min="0" max="24" value="2"/>
+      <div class="slider-readout"><span id="hrs-val">2</span> <span style="font-size:24px;color:var(--ink-soft)">Std</span></div>
+      <div class="slider-msg" id="hrs-msg">Realistisch — für die meisten Menschen heute.</div>
+    </div>
+  </div>
+</section>
+
+<section id="umfrage" style="padding-top:40px">
+  <div class="survey reveal">
+    <span class="eyebrow" style="color:var(--accent-2)">Wir brauchen deine Stimme</span>
+    <h2>Was denkst <em>du</em> wirklich über unsere Tech-Abhängigkeit?</h2>
+    <p>Wir sammeln Antworten für ein Projekt zur digitalen Gesellschaft. Es dauert nur <strong>2 Minuten</strong>, ist anonym, und deine Sicht zählt wirklich. Klick unten — und werde Teil der Auswertung.</p>
+    <a class="btn-survey" href="https://forms.office.com/e/vPbk1qSfJy" target="_blank" rel="noopener">
+      Umfrage jetzt ausfüllen <span class="arr">→</span>
+    </a>
+    <small>Microsoft Forms · ca. 2 Minuten · anonym</small>
+  </div>
+</section>
+
+<section id="quellen" class="sources">
+  <div class="wrap">
+    <span class="eyebrow reveal">Belege &amp; Studien</span>
+    <h2 class="section-title reveal">Alle Quellen.</h2>
+    <p class="section-intro reveal">Jede Zahl, jedes Diagramm und jede Aussage auf dieser Seite ist nachvollziehbar belegt. Klick die [Nummern] im Text, um direkt hierher zu springen.</p>
+    <ol>
+      <li id="q1"><strong>DataReportal — Digital 2024 Global Overview Report</strong><em>Kepios / We Are Social / Meltwater, Januar 2024.</em> Quelle für tägliche Internetnutzung (6h 38min) und globale Online-Bevölkerung (5,35 Mrd).<br><a href="https://datareportal.com/reports/digital-2024-global-overview-report" target="_blank" rel="noopener">datareportal.com/reports/digital-2024-global-overview-report</a></li>
+      <li id="q2"><strong>Reviews.org — Cell Phone Addiction Study 2024</strong><em>Jährliche US-Umfrage zur Smartphone-Nutzung.</em> Quelle für 89% Morgen-Check, 56,9% Selbsteinschätzung als süchtig, 205 Checks/Tag.<br><a href="https://www.reviews.org/mobile/cell-phone-addiction/" target="_blank" rel="noopener">reviews.org/mobile/cell-phone-addiction</a></li>
+      <li id="q3"><strong>Common Sense Media — The Common Sense Census: Media Use by Tweens and Teens, 2021</strong><em>Rideout, V., Peebles, A., Mann, S., &amp; Robb, M. B. (2022).</em> Mediennutzung von US-Jugendlichen.<br><a href="https://www.commonsensemedia.org/research/the-common-sense-census-media-use-by-tweens-and-teens-2021" target="_blank" rel="noopener">commonsensemedia.org/research/...media-use-by-tweens-and-teens-2021</a></li>
+      <li id="q4"><strong>Sapien Labs — Age of First Smartphone/Tablet and Mental Wellbeing Outcomes</strong><em>Global Mind Project, 2023.</em> Studie mit ~28.000 jungen Erwachsenen aus 41 Ländern.<br><a href="https://sapienlabs.org/wp-content/uploads/2023/05/Sapien-Labs-Age-of-First-Smartphone-and-Mental-Wellbeing-Outcomes.pdf" target="_blank" rel="noopener">sapienlabs.org/.../Age-of-First-Smartphone...pdf</a></li>
+      <li id="q5"><strong>Pew Research Center — The Internet and Education</strong><em>Wie der Zugang zu Information Lernen verändert hat.</em><br><a href="https://www.pewresearch.org/internet/2012/02/29/main-findings-teachers-students-and-writing/" target="_blank" rel="noopener">pewresearch.org/internet/...teachers-students-and-writing</a></li>
+      <li id="q6"><strong>WHO — Global strategy on digital health 2020–2025</strong><em>World Health Organization, 2021.</em> Rolle digitaler Technologien in Medizin und Telemedizin.<br><a href="https://www.who.int/docs/default-source/documents/gs4dhdaa2a9f352b0445bafbc79ca799dce4d.pdf" target="_blank" rel="noopener">who.int/.../Global strategy on digital health</a></li>
+      <li id="q7"><strong>Mark, G. — "Attention Span: A Groundbreaking Way to Restore Balance" (2023)</strong><em>UC Irvine Forschung — Aufmerksamkeit auf Bildschirmen ist von 2,5 Min (2004) auf ~47 Sek gefallen.</em><br><a href="https://news.uci.edu/2023/01/19/uci-informatics-professors-research-shows-shrinking-attention-spans-caused-by-digital-disruption/" target="_blank" rel="noopener">news.uci.edu/2023/01/19/...shrinking-attention-spans</a></li>
+      <li id="q8"><strong>Hale, L. &amp; Guan, S. — Screen time and sleep among school-aged children and adolescents</strong><em>Sleep Medicine Reviews, 2015. Meta-Analyse von 67 Studien.</em><br><a href="https://www.sciencedirect.com/science/article/abs/pii/S1087079214001063" target="_blank" rel="noopener">sciencedirect.com/.../screen-time-and-sleep</a></li>
+      <li id="q9"><strong>Twenge, J. M. et al. — Increases in Depressive Symptoms, Suicide-Related Outcomes, and Screen Time</strong><em>Clinical Psychological Science, 2018.</em><br><a href="https://journals.sagepub.com/doi/10.1177/2167702617723376" target="_blank" rel="noopener">journals.sagepub.com/doi/10.1177/2167702617723376</a></li>
+      <li id="q10"><strong>Przybylski, A. K. &amp; Weinstein, N. — "Can you connect with me now?"</strong><em>Journal of Social and Personal Relationships, 2013. Wie bloße Handy-Präsenz Gesprächsqualität senkt.</em><br><a href="https://journals.sagepub.com/doi/10.1177/0265407512453827" target="_blank" rel="noopener">journals.sagepub.com/doi/10.1177/0265407512453827</a></li>
+      <li id="qforms"><strong>Eigene Umfrage (Microsoft Forms)</strong><em>Aktive Befragung im Rahmen dieses Projekts — deine Antworten fließen direkt in die Auswertung ein.</em><br><a href="https://forms.office.com/e/vPbk1qSfJy" target="_blank" rel="noopener">forms.office.com/e/vPbk1qSfJy</a></li>
+    </ol>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p>© 2026 tech&amp;wir — Interaktive Reflexion über die digitale Gesellschaft. Alle Daten Stand 2024, Quellen siehe oben.</p>
+  </div>
+</footer>
+
+<script>
+/* Reveal */
+const io = new IntersectionObserver(es=>es.forEach(e=>e.isIntersecting && e.target.classList.add('in')),{threshold:.12});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+/* Count up */
+const cio = new IntersectionObserver(es=>es.forEach(e=>{
+  if(!e.isIntersecting) return;
+  const el = e.target;
+  const target = parseFloat(el.dataset.count);
+  const isInt = Number.isInteger(target);
+  let cur = 0;
+  const step = target/60;
+  const tick = ()=>{
+    cur += step;
+    if(cur>=target){el.textContent = isInt?target:target.toFixed(1);return}
+    el.textContent = isInt? Math.floor(cur) : cur.toFixed(1);
+    requestAnimationFrame(tick);
+  };
+  tick();
+  cio.unobserve(el);
+}),{threshold:.5});
+document.querySelectorAll('.stat .num').forEach(el=>cio.observe(el));
+
+/* CHARTS */
+const inkColor = '#1b1d22';
+const accent = '#ff5b3a';
+const accent2 = '#ffb547';
+const mint = '#9be8c4';
+const sky = '#bfd9ff';
+Chart.defaults.font.family = "'Inter',sans-serif";
+Chart.defaults.color = '#4a4f57';
+Chart.defaults.borderColor = '#1b1d2218';
+
+const baseOpts = {
+  responsive:true, maintainAspectRatio:false,
+  plugins:{legend:{labels:{font:{size:12,weight:'500'}}}},
+  scales:{y:{beginAtZero:true,grid:{color:'#1b1d2210'}},x:{grid:{display:false}}}
+};
+
+function makeChart(id, cfg){
+  const el = document.getElementById(id);
+  if(!el) return;
+  // lazy-init on reveal
+  new IntersectionObserver((es,obs)=>{
+    if(es[0].isIntersecting){ new Chart(el, cfg); obs.disconnect(); }
+  },{threshold:.2}).observe(el);
+}
+
+// Chart 1: Bildschirmzeit Trend
+makeChart('c1',{
+  type:'line',
+  data:{
+    labels:['2013','2015','2017','2019','2021','2023','2024'],
+    datasets:[{
+      label:'Std. online pro Tag',
+      data:[5.55,6.15,6.5,6.7,6.95,6.65,6.63],
+      borderColor:accent, backgroundColor:'rgba(255,91,58,0.15)',
+      tension:0.35, fill:true, borderWidth:3,
+      pointBackgroundColor:accent, pointRadius:5, pointHoverRadius:7
+    }]
+  },
+  options:{...baseOpts, scales:{...baseOpts.scales, y:{...baseOpts.scales.y, suggestedMax:8, ticks:{callback:v=>v+' h'}}}}
+});
+
+// Chart 2: Abhängigkeit nach Alter
+makeChart('c2',{
+  type:'bar',
+  data:{
+    labels:['18–29','30–43','44–59','60+'],
+    datasets:[{
+      label:'% fühlen sich abhängig vom Smartphone',
+      data:[78, 68, 54, 30],
+      backgroundColor:[accent, '#ff7e5a', accent2, sky],
+      borderRadius:10
+    }]
+  },
+  options:{...baseOpts, plugins:{legend:{display:false}}, scales:{...baseOpts.scales, y:{...baseOpts.scales.y, max:100, ticks:{callback:v=>v+' %'}}}}
+});
+
+// Chart 3: Mediennutzung Jugendliche
+makeChart('c3',{
+  type:'doughnut',
+  data:{
+    labels:['Videos','Gaming','Social Media','Browsing','Lesen (digital)'],
+    datasets:[{
+      data:[2.5, 1.75, 1.5, 1.0, 0.4],
+      backgroundColor:[accent, accent2, mint, sky, '#d8c4ff'],
+      borderWidth:0
+    }]
+  },
+  options:{
+    responsive:true, maintainAspectRatio:false,
+    plugins:{
+      legend:{position:'right', labels:{font:{size:12}, padding:14}},
+      tooltip:{callbacks:{label:c=>` ${c.label}: ${c.raw} h/Tag`}}
+    }
+  }
+});
+
+// Chart 4: Smartphone-Alter vs. Mental Health
+makeChart('c4',{
+  type:'bar',
+  data:{
+    labels:['unter 6','6–10','11–13','14–15','16–18','nach 18'],
+    datasets:[{
+      label:'Mental Health Quotient (höher = besser)',
+      data:[28, 45, 62, 74, 80, 86],
+      backgroundColor:ctx=>{
+        const v = ctx.raw;
+        if(v<40) return accent;
+        if(v<70) return accent2;
+        return mint;
+      },
+      borderRadius:10
+    }]
+  },
+  options:{...baseOpts, plugins:{legend:{display:false}}, scales:{...baseOpts.scales, y:{...baseOpts.scales.y, suggestedMax:100, title:{display:true,text:'MHQ-Score'}}, x:{...baseOpts.scales.x, title:{display:true,text:'Alter beim ersten Smartphone'}}}}
+});
+
+/* QUIZ */
+const questions = [
+  {q:"Wie oft checkst du dein Handy am Tag?",opts:[["Unter 50 mal",1],["50–120 mal",2],["120–200 mal",3],["Mehr als 200 mal",4]]},
+  {q:"Was machst du als Erstes nach dem Aufwachen?",opts:[["Aufstehen, frühstücken",1],["Wecker ausmachen",2],["Kurz Nachrichten checken",3],["Direkt 20 min Social Media",4]]},
+  {q:"Stell dir vor: Kein Internet für 24 Stunden.",opts:[["Wäre erholsam",1],["Geht klar, aber ungewohnt",2],["Würde mich nervös machen",3],["Panik. Arbeit/Schule wäre vorbei.",4]]},
+  {q:"Wie oft nutzt du Tech während Gesprächen mit Freunden?",opts:[["Nie",1],["Selten, nur wenn nötig",2],["Oft, ohne nachzudenken",3],["Praktisch durchgehend",4]]},
+  {q:"Wenn du dich langweilst, was machst du?",opts:[["Tagträumen, nachdenken",1],["Buch, Spaziergang",2],["Direkt aufs Handy",3],["Handy war eh schon in der Hand",4]]}
+];
+let qi=0, total=0;
+const qEl=document.getElementById('quiz-question');
+const oEl=document.getElementById('quiz-opts');
+const bar=document.getElementById('qbar');
+const cnt=document.getElementById('qcount');
+function render(){
+  const q=questions[qi];
+  qEl.textContent=q.q;
+  oEl.innerHTML='';
+  q.opts.forEach(([txt,val])=>{
+    const b=document.createElement('button');
+    b.className='opt';b.textContent=txt;
+    b.onclick=()=>{b.classList.add('selected');total+=val;setTimeout(next,280)};
+    oEl.appendChild(b);
+  });
+  bar.style.width=((qi)/questions.length*100)+'%';
+  cnt.textContent=`Frage ${qi+1} von ${questions.length}`;
+}
+function next(){qi++;if(qi>=questions.length){show();return}render()}
+function show(){
+  document.getElementById('quiz-content').style.display='none';
+  const r=document.getElementById('quiz-result');
+  r.style.display='block';
+  const pct=Math.round((total/20)*100);
+  document.getElementById('score').textContent=pct+'%';
+  let title,desc;
+  if(pct<40){title="Erstaunlich entspannt";desc="Du gehörst zu den wenigen, die Technologie als Werkzeug nutzen — nicht als Verlängerung des Körpers. Beneidenswert."}
+  else if(pct<65){title="Bewusst verbunden";desc="Du nutzt Technologie viel, aber mit einem gewissen Bewusstsein. Achte auf die kleinen Reflexe — sie verraten viel."}
+  else if(pct<85){title="Stark eingebunden";desc="Dein Alltag ist eng mit Tech verflochten. Das ist normal in unserer Gesellschaft — aber vielleicht lohnt sich mal eine bewusste Pause."}
+  else {title="Sehr abhängig";desc="Technologie ist für dich kaum noch optional. Du bist nicht allein — aber dein Score zeigt, wie tief die Verflechtung gehen kann."}
+  document.getElementById('score-title').textContent=title;
+  document.getElementById('score-desc').textContent=desc;
+}
+render();
+
+/* SLIDER */
+const hrs=document.getElementById('hrs');
+const hv=document.getElementById('hrs-val');
+const hm=document.getElementById('hrs-msg');
+const msgs=["Praktisch unmöglich heute — alles läuft digital.","Sehr wenig — du bist stark eingebunden.","Realistisch — für die meisten Menschen heute.","Ein guter Tag mit bewussten Pausen.","Beachtlich — viele schaffen das nicht.","Fast schon ein Digital-Detox.","Beeindruckend — bist du sicher? 😉","Ein ganzer Tag offline — Respekt!"];
+hrs.addEventListener('input',()=>{
+  const v=+hrs.value;hv.textContent=v;
+  let i=0;
+  if(v===0)i=0;else if(v<=2)i=1;else if(v<=4)i=2;else if(v<=7)i=3;else if(v<=10)i=4;else if(v<=15)i=5;else if(v<=20)i=6;else i=7;
+  hm.style.opacity=0;
+  setTimeout(()=>{hm.textContent=msgs[i];hm.style.opacity=1},150);
+});
+</script>
+</body>
+</html>
