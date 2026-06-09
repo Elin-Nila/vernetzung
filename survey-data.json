@@ -1,21 +1,13 @@
 {
-  "teilnehmende": 34,
   "stand": "09.06.2026",
-  "bildschirmzeit": [
-    2,
-    13,
-    18
-  ],
-  "morgenNutzung": [
-    13,
-    12,
-    8
-  ],
-  "alter": [
-    25,
-    4,
-    1,
-    1,
-    2
-  ]
+  "teilnehmende": 34,
+  "bildschirmzeit": [2,13,18],
+  "morgenNutzung": [13,12,8],
+  "aussagen": [0,0,0,0,0,0,0,0,0],
+  "alter": [25,4,1,1,2],
+  "kennzahlen": {
+    "geraete5bis8Prozent": 53,
+    "morgenUnter5Prozent": 38,
+    "techSchuleArbeitProzent": 100
+  }
 }
